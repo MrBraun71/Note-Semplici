@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="light" lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Appunti</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-variant": "#e1e3e3",
+            "background": "#f8f9f9",
+            "error-container": "#ffdad6",
+            "tertiary-fixed": "#f5d9ff",
+            "error": "#ba1a1a",
+            "outline-variant": "#c1c7ce",
+            "inverse-surface": "#2e3131",
+            "on-primary-fixed-variant": "#0a4c69",
+            "on-secondary-container": "#386d65",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed-variant": "#164f47",
+            "on-error": "#ffffff",
+            "secondary-container": "#b6eee2",
+            "on-tertiary-fixed": "#271333",
+            "surface-tint": "#2d6482",
+            "tertiary-fixed-dim": "#dabce6",
+            "surface-container-high": "#e7e8e8",
+            "surface-container-highest": "#e1e3e3",
+            "on-background": "#191c1c",
+            "inverse-primary": "#99cdf0",
+            "surface-bright": "#f8f9f9",
+            "primary-fixed": "#c6e7ff",
+            "secondary": "#32675f",
+            "primary": "#2d6482",
+            "surface": "#f8f9f9",
+            "tertiary-container": "#c0a3cc",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#9ad1c6",
+            "on-primary-fixed": "#001e2d",
+            "on-surface": "#191c1c",
+            "on-tertiary": "#ffffff",
+            "outline": "#71787e",
+            "surface-dim": "#d9dada",
+            "surface-container": "#edeeee",
+            "on-surface-variant": "#41484d",
+            "tertiary": "#6e557a",
+            "on-primary": "#ffffff",
+            "inverse-on-surface": "#f0f1f1",
+            "on-tertiary-container": "#4f385b",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#004562",
+            "surface-container-low": "#f3f4f4",
+            "primary-container": "#7fb3d5",
+            "secondary-fixed": "#b6eee2",
+            "on-tertiary-fixed-variant": "#553e61",
+            "primary-fixed-dim": "#99cdf0",
+            "on-secondary-fixed": "#00201c"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            lg: "24px",
+            md: "16px",
+            "container-margin": "20px",
+            base: "4px",
+            gutter: "16px",
+            xl: "32px",
+            sm: "12px",
+            xs: "8px"
+          },
+          fontFamily: {
+            sans: ["Inter", "system-ui", "sans-serif"]
+          },
+          fontSize: {
+            "display-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "display-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+            "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "500" }],
+            "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface h-screen overflow-hidden flex font-sans relative">
+  <div class="absolute inset-0 bg-gradient-to-br from-tertiary-fixed/40 via-background to-primary-fixed/20 z-0 pointer-events-none"></div>
+
+  <!-- Desktop Icon Nav -->
+  <nav class="fixed left-0 top-0 h-full w-20 flex-col items-center py-6 border-r border-white/40 shadow-sm z-40 bg-surface/70 backdrop-blur-3xl hidden md:flex">
+    <div class="mb-12">
+      <span class="material-symbols-outlined text-primary text-headline-md" style="font-variation-settings: 'FILL' 1;">edit_document</span>
+    </div>
+    <div class="flex flex-col gap-4 w-full px-2" id="categoryNav">
+      <button class="cat-btn flex flex-col items-center justify-center text-on-surface-variant w-14 h-14 hover:bg-surface-container-highest/50 rounded-xl transition-all group relative" data-cat="all">
+        <div class="absolute inset-0 bg-primary-fixed/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <span class="material-symbols-outlined z-10">folder</span>
+      </button>
+      <button class="cat-btn flex flex-col items-center justify-center text-on-surface-variant w-14 h-14 hover:bg-surface-container-highest/50 rounded-xl transition-all group relative" data-cat="personal">
+        <div class="absolute inset-0 bg-primary-fixed/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <span class="material-symbols-outlined z-10">person</span>
+      </button>
+      <button class="cat-btn flex flex-col items-center justify-center text-on-surface-variant w-14 h-14 hover:bg-surface-container-highest/50 rounded-xl transition-all group relative" data-cat="work">
+        <div class="absolute inset-0 bg-secondary-fixed/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <span class="material-symbols-outlined z-10">work</span>
+      </button>
+      <button class="cat-btn flex flex-col items-center justify-center text-on-surface-variant w-14 h-14 hover:bg-surface-container-highest/50 rounded-xl transition-all group relative" data-cat="ideas">
+        <div class="absolute inset-0 bg-tertiary-fixed/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <span class="material-symbols-outlined z-10">lightbulb</span>
+      </button>
+      <button class="cat-btn flex flex-col items-center justify-center text-on-surface-variant w-14 h-14 hover:bg-surface-container-highest/50 rounded-xl transition-all group relative" data-cat="drafts">
+        <div class="absolute inset-0 bg-outline-variant/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <span class="material-symbols-outlined z-10">edit</span>
+      </button>
+    </div>
+    <div class="mt-auto flex flex-col gap-4">
+      <button class="w-12 h-12 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center hover:bg-surface-variant transition-colors">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer Overlay -->
+  <div id="mobileDrawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/20 backdrop-blur-sm" id="drawerBackdrop"></div>
+    <div class="absolute left-0 top-0 h-full w-72 bg-surface/95 backdrop-blur-3xl border-r border-white/40 flex flex-col animate-slide-in">
+      <div class="flex items-center justify-between p-4 border-b border-outline-variant/20">
+        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">edit_document</span>
+        <button id="closeDrawer" class="text-on-surface-variant hover:text-on-surface">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="flex gap-2 p-3 border-b border-outline-variant/20" id="mobileCategoryNav">
+        <button class="cat-btn-mobile flex-1 px-3 py-2 rounded-lg text-label-sm text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors text-center" data-cat="all">Tutti</button>
+        <button class="cat-btn-mobile flex-1 px-3 py-2 rounded-lg text-label-sm text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors text-center" data-cat="personal">Personali</button>
+        <button class="cat-btn-mobile flex-1 px-3 py-2 rounded-lg text-label-sm text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors text-center" data-cat="work">Lavoro</button>
+        <button class="cat-btn-mobile flex-1 px-3 py-2 rounded-lg text-label-sm text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors text-center" data-cat="ideas">Idee</button>
+        <button class="cat-btn-mobile flex-1 px-3 py-2 rounded-lg text-label-sm text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors text-center" data-cat="drafts">Bozze</button>
+      </div>
+      <div class="flex-1 overflow-y-auto p-2" id="mobileNoteList"></div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col relative z-10 md:ml-20 h-full">
+    <!-- Note List Panel (desktop) -->
+    <aside class="hidden md:flex flex-col w-72 border-r border-white/40 bg-surface/30 backdrop-blur-md shrink-0 h-full">
+      <div class="p-4 border-b border-outline-variant/20">
+        <h2 class="text-headline-sm font-semibold text-on-surface" id="activeCategoryLabel">Tutte le note</h2>
+        <p class="text-label-sm text-on-surface-variant" id="noteCount">0 note</p>
+      </div>
+      <div class="flex-1 overflow-y-auto p-2 space-y-1" id="noteList"></div>
+    </aside>
+
+    <!-- Editor Area -->
+    <div class="flex-1 flex flex-col h-full min-w-0">
+      <!-- TopAppBar -->
+      <header class="flex justify-between items-center w-full px-container-margin h-16 bg-transparent shrink-0">
+        <div class="flex items-center gap-4">
+          <button class="text-on-surface hover:opacity-70 transition-opacity md:hidden" id="menuBtn">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <div class="flex items-center gap-2 text-on-surface-variant text-label-md" id="breadcrumb">
+            <span class="material-symbols-outlined text-tertiary text-[18px]">lightbulb</span>
+            <span>Idee</span>
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+          </div>
+        </div>
+        <button class="text-on-surface hover:opacity-70 transition-opacity">
+          <span class="material-symbols-outlined">more_vert</span>
+        </button>
+      </header>
+
+      <!-- Editor Canvas -->
+      <div class="flex-1 px-container-margin pb-32 overflow-y-auto relative">
+        <div id="editorCanvas" class="glass-panel ambient-glow rounded-xl p-6 md:p-12 min-h-[400px] max-w-4xl mx-auto flex flex-col gap-6 relative group">
+          <p class="empty-msg text-center text-on-surface-variant/50 my-20">Seleziona o crea una nota</p>
+        </div>
+      </div>
+
+      <!-- FAB -->
+      <button id="addBtn" class="fixed bottom-24 right-container-margin md:bottom-8 md:right-8 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-surface-tint text-on-primary flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all z-30 ambient-glow">
+        <span class="material-symbols-outlined">add</span>
+      </button>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
