@@ -86,31 +86,35 @@ function renderEditor() {
   const cat = CATEGORY_CONFIG[note.category] || CATEGORY_CONFIG.ideas
 
   canvas.innerHTML = `
-    <input type="text" class="editor-title-input w-full bg-transparent border-none p-0 text-display-lg font-bold text-on-surface focus:ring-0 placeholder:text-on-surface-variant/40" placeholder="Senza titolo" value="${escAttr(note.title)}">
+    <div class="flex items-start justify-between gap-4">
+      <input type="text" class="editor-title-input w-full bg-transparent border-none p-0 text-display-lg font-bold text-on-surface focus:ring-0 placeholder:text-on-surface-variant/40" placeholder="Senza titolo" value="${escAttr(note.title)}">
+      <button id="deleteNoteBtn" class="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant/40 hover:text-error hover:bg-error-container/60 transition-all" title="Elimina nota">
+        <span class="material-symbols-outlined text-[20px]">delete</span>
+      </button>
+    </div>
     <div class="flex gap-2 flex-wrap mb-2">
       <span class="px-3 py-1 rounded-full text-label-sm flex items-center gap-1.5 border border-white/40 backdrop-blur-md" style="background: ${cat.color}20; color: ${cat.catColor}">
         <span class="w-2 h-2 rounded-full" style="background: ${cat.catColor}"></span>
         ${cat.label}
       </span>
     </div>
-    <textarea class="editor-content-area w-full flex-1 bg-transparent border-none p-0 text-body-lg text-on-surface/90 focus:ring-0 resize-none placeholder:text-on-surface-variant/30 leading-relaxed min-h-[300px]" placeholder="Scrivi qui i tuoi appunti...">${escHtml(note.content)}</textarea>
+    <div class="editor-content-area w-full flex-1 bg-transparent border-none p-0 text-body-lg text-on-surface/90 focus:outline-none leading-relaxed min-h-[300px]" contenteditable="true">${note.content || ''}</div>
   `
 
   const titleInput = canvas.querySelector('.editor-title-input')
   const contentArea = canvas.querySelector('.editor-content-area')
 
   titleInput.addEventListener('input', () => scheduleSave())
-  contentArea.addEventListener('input', function () {
-    scheduleSave()
-    this.style.height = 'auto'
-    this.style.height = this.scrollHeight + 'px'
+  contentArea.addEventListener('input', () => scheduleSave())
+  contentArea.addEventListener('focus', () => {
+    if (contentArea.innerHTML === '<br>' || contentArea.textContent === '') {
+      contentArea.innerHTML = ''
+    }
   })
 
-  setTimeout(() => {
-    contentArea.style.height = 'auto'
-    contentArea.style.height = contentArea.scrollHeight + 'px'
-  }, 10)
-  contentArea.focus()
+  $('#deleteNoteBtn').addEventListener('click', () => {
+    if (confirm('Eliminare questa nota?')) deleteNote(note.id)
+  })
 }
 
 function closeDrawer() {
@@ -220,7 +224,8 @@ async function saveCurrentNote() {
   if (!note) return
 
   const title = document.querySelector('.editor-title-input')?.value ?? note.title
-  const content = document.querySelector('.editor-content-area')?.value ?? note.content
+  const el = document.querySelector('.editor-content-area')
+  const content = el ? el.innerHTML : note.content
 
   try {
     const updated = await db.update(note.id, { title, content })
@@ -230,6 +235,33 @@ async function saveCurrentNote() {
     console.error('Save error:', err)
   }
 }
+
+// Toolbar formatting
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.toolbar-btn')
+  if (!btn) return
+  const contentArea = document.querySelector('.editor-content-area')
+  if (!contentArea) return
+  contentArea.focus()
+
+  const cmd = btn.dataset.cmd
+  const param = btn.dataset.param
+
+  if (cmd === 'heading') {
+    const sel = window.getSelection()
+    if (!sel.rangeCount) return
+    const parent = sel.anchorNode?.parentElement?.closest('h1,h2,h3,h4')
+    if (parent) {
+      document.execCommand('formatBlock', false, 'p')
+    } else {
+      document.execCommand('formatBlock', false, 'h3')
+    }
+  } else {
+    document.execCommand(cmd, false, param || null)
+  }
+  contentArea.focus()
+  scheduleSave()
+})
 
 // Events
 $('#addBtn').addEventListener('click', addNote)

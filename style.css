@@ -143,6 +143,22 @@ html, body { height: 100%; }
   animation: slideIn 0.25s ease-out;
 }
 
+/* ContentEditable placeholder */
+.editor-content-area:empty:before {
+  content: 'Scrivi qui i tuoi appunti...';
+  color: rgba(65, 72, 77, 0.3);
+  pointer-events: none;
+}
+
+.editor-content-area:focus:empty:before {
+  color: rgba(65, 72, 77, 0.2);
+}
+
+/* Toolbar active state */
+.toolbar-btn:active {
+  background: rgba(65, 72, 77, 0.1);
+}
+
 /* Mobile responsiveness */
 @media (max-width: 767px) {
   .glass-panel {
@@ -153,5 +169,9 @@ html, body { height: 100%; }
   .editor-title-input {
     font-size: 28px;
     line-height: 36px;
+  }
+  
+  #toolbar {
+    bottom: 8px;
   }
 }

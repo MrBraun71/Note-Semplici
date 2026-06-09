@@ -191,8 +191,37 @@
         </div>
       </div>
 
+      <!-- Writing Toolbar -->
+      <div id="toolbar" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex justify-center w-full px-container-margin pointer-events-none md:px-0">
+        <div class="pointer-events-auto flex items-center gap-1 p-2 rounded-full bg-white/70 backdrop-blur-2xl border border-white/40 shadow-lg ambient-glow">
+          <button class="toolbar-btn p-2 rounded-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors active:scale-90" data-cmd="bold">
+            <span class="material-symbols-outlined text-[20px]">format_bold</span>
+          </button>
+          <button class="toolbar-btn p-2 rounded-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors active:scale-90" data-cmd="italic">
+            <span class="material-symbols-outlined text-[20px]">format_italic</span>
+          </button>
+          <button class="toolbar-btn p-2 rounded-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors active:scale-90" data-cmd="underline">
+            <span class="material-symbols-outlined text-[20px]">format_underlined</span>
+          </button>
+          <div class="w-px h-6 bg-outline-variant/30 mx-1"></div>
+          <button class="toolbar-btn p-2 rounded-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors active:scale-90" data-cmd="insertUnorderedList">
+            <span class="material-symbols-outlined text-[20px]">format_list_bulleted</span>
+          </button>
+          <button class="toolbar-btn p-2 rounded-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors active:scale-90" data-cmd="formatBlock" data-param="blockquote">
+            <span class="material-symbols-outlined text-[20px]">format_quote</span>
+          </button>
+          <div class="w-px h-6 bg-outline-variant/30 mx-1"></div>
+          <button class="toolbar-btn p-2 rounded-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors active:scale-90" data-cmd="heading">
+            <span class="material-symbols-outlined text-[20px]">title</span>
+          </button>
+          <button class="toolbar-btn p-2 rounded-full text-on-surface-variant hover:bg-surface-variant/50 transition-colors active:scale-90" data-cmd="undo">
+            <span class="material-symbols-outlined text-[20px]">undo</span>
+          </button>
+        </div>
+      </div>
+
       <!-- FAB -->
-      <button id="addBtn" class="fixed bottom-24 right-container-margin md:bottom-8 md:right-8 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-surface-tint text-on-primary flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all z-30 ambient-glow">
+      <button id="addBtn" class="fixed bottom-24 right-container-margin md:bottom-24 md:right-8 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-surface-tint text-on-primary flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all z-30 ambient-glow">
         <span class="material-symbols-outlined">add</span>
       </button>
     </div>
