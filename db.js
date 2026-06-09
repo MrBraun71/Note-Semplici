@@ -1,13 +1,24 @@
-if (!window.supabase) {
-  throw new Error('Supabase non caricato: verifica connessione internet e URL CDN')
-}
-const { createClient } = window.supabase
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
 const TABLE = 'notes'
+
+function initSupabase() {
+  if (!window.supabase) {
+    throw new Error('Supabase non caricato: verifica connessione internet e URL CDN')
+  }
+  const { createClient } = window.supabase
+  return createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+}
+
+let supabase
+try {
+  supabase = initSupabase()
+} catch (e) {
+  console.error('Supabase init error:', e)
+  supabase = null
+}
 
 const db = {
   async getAll() {
+    if (!supabase) throw new Error('Supabase non inizializzato')
     const { data, error } = await supabase
       .from(TABLE)
       .select('*')
@@ -17,6 +28,7 @@ const db = {
   },
 
   async create(data) {
+    if (!supabase) throw new Error('Supabase non inizializzato')
     const { data: note, error } = await supabase
       .from(TABLE)
       .insert(data)
@@ -27,6 +39,7 @@ const db = {
   },
 
   async update(id, data) {
+    if (!supabase) throw new Error('Supabase non inizializzato')
     const { data: note, error } = await supabase
       .from(TABLE)
       .update(data)
@@ -38,6 +51,7 @@ const db = {
   },
 
   async remove(id) {
+    if (!supabase) throw new Error('Supabase non inizializzato')
     const { error } = await supabase
       .from(TABLE)
       .delete()

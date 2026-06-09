@@ -5,6 +5,11 @@ const state = {
   saveTimer: null,
 }
 
+if (typeof db === 'undefined') {
+  console.error('ERRORE: db non definito — controlla console per errori Supabase/CDN')
+  alert('Errore caricamento database. Apri DevTools (F12) → Console per dettagli.')
+}
+
 const $ = (sel) => document.querySelector(sel)
 const $$ = (sel) => document.querySelectorAll(sel)
 
