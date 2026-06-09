@@ -237,25 +237,19 @@ async function saveCurrentNote() {
 }
 
 // Toolbar formatting
-document.addEventListener('click', (e) => {
+document.addEventListener('mousedown', (e) => {
   const btn = e.target.closest('.toolbar-btn')
   if (!btn) return
+  e.preventDefault()
   const contentArea = document.querySelector('.editor-content-area')
   if (!contentArea) return
-  contentArea.focus()
 
   const cmd = btn.dataset.cmd
   const param = btn.dataset.param
 
   if (cmd === 'heading') {
-    const sel = window.getSelection()
-    if (!sel.rangeCount) return
-    const parent = sel.anchorNode?.parentElement?.closest('h1,h2,h3,h4')
-    if (parent) {
-      document.execCommand('formatBlock', false, 'p')
-    } else {
-      document.execCommand('formatBlock', false, 'h3')
-    }
+    document.execCommand('formatBlock', false,
+      contentArea.querySelector('h3') ? 'p' : 'h3')
   } else {
     document.execCommand(cmd, false, param || null)
   }
