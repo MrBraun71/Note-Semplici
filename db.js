@@ -1,12 +1,12 @@
-const BASE = SUPABASE_URL + '/rest/v1'
+const BASE = window.SUPABASE_URL + '/rest/v1'
 const HEADERS = {
-  apikey: SUPABASE_ANON_KEY,
-  Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+  apikey: window.SUPABASE_ANON_KEY,
+  Authorization: 'Bearer ' + window.SUPABASE_ANON_KEY,
   'Content-Type': 'application/json',
   Prefer: 'return=representation',
 }
 
-const db = {
+
   async getAll() {
     const res = await fetch(BASE + '/notes?order=createdAt.asc', {
       headers: HEADERS,
