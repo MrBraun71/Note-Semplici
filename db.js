@@ -1,48 +1,48 @@
-if (!window.supabase) {
-  throw new Error('Supabase non caricato: verifica connessione internet e URL CDN')
+const BASE = window.SUPABASE_URL + '/rest/v1'
+const HEADERS = {
+  apikey: window.SUPABASE_ANON_KEY,
+  Authorization: 'Bearer ' + window.SUPABASE_ANON_KEY,
+  'Content-Type': 'application/json',
+  Prefer: 'return=representation',
 }
-const { createClient } = window.supabase
-const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY)
-
-const TABLE = 'notes'
 
 const db = {
   async getAll() {
-    const { data, error } = await supabase
-      .from(TABLE)
-      .select('*')
-      .order('createdAt', { ascending: true })
-    if (error) throw error
-    return data
+    const res = await fetch(BASE + '/notes?order=createdAt.asc', {
+      headers: HEADERS,
+    })
+    if (!res.ok) throw new Error(res.statusText)
+    return res.json()
   },
 
   async create(data) {
-    const { data: note, error } = await supabase
-      .from(TABLE)
-      .insert(data)
-      .select()
-      .single()
-    if (error) throw error
+    const res = await fetch(BASE + '/notes', {
+      method: 'POST',
+      headers: HEADERS,
+      body: JSON.stringify(data),
+    })
+    if (!res.ok) throw new Error(res.statusText)
+    const [note] = await res.json()
     return note
   },
 
   async update(id, data) {
-    const { data: note, error } = await supabase
-      .from(TABLE)
-      .update(data)
-      .eq('id', id)
-      .select()
-      .single()
-    if (error) throw error
+    const res = await fetch(BASE + '/notes?id=eq.' + id, {
+      method: 'PATCH',
+      headers: HEADERS,
+      body: JSON.stringify(data),
+    })
+    if (!res.ok) throw new Error(res.statusText)
+    const [note] = await res.json()
     return note
   },
 
   async remove(id) {
-    const { error } = await supabase
-      .from(TABLE)
-      .delete()
-      .eq('id', id)
-    if (error) throw error
+    const res = await fetch(BASE + '/notes?id=eq.' + id, {
+      method: 'DELETE',
+      headers: HEADERS,
+    })
+    if (!res.ok) throw new Error(res.statusText)
   },
 }
 
