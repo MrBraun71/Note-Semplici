@@ -45,3 +45,4 @@ const HEADERS = {
     if (!res.ok) throw new Error(res.statusText)
   },
 }
+window.db = db;
