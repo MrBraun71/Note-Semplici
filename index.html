@@ -155,7 +155,7 @@
   </div>
 
   <!-- Main Content -->
-  <main class="flex-1 flex flex-col relative z-10 md:ml-20 h-full">
+  <main class="flex-1 flex md:flex-row flex-col relative z-10 md:ml-20 h-full">
     <!-- Note List Panel (desktop) -->
     <aside class="hidden md:flex flex-col w-72 border-r border-white/40 bg-surface/30 backdrop-blur-md shrink-0 h-full">
       <div class="p-4 border-b border-outline-variant/20">
@@ -221,12 +221,13 @@
       </div>
 
       <!-- FAB -->
-      <button id="addBtn" class="fixed bottom-24 right-container-margin md:bottom-24 md:right-8 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-surface-tint text-on-primary flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all z-30 ambient-glow">
+      <button id="addBtn" class="fixed bottom-6 right-container-margin md:bottom-24 md:right-8 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-surface-tint text-on-primary flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all z-30 ambient-glow">
         <span class="material-symbols-outlined">add</span>
       </button>
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script src="db.js"></script>
   <script src="app.js"></script>

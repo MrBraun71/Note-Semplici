@@ -1,48 +1,49 @@
-const BASE = window.SUPABASE_URL + '/rest/v1'
-const HEADERS = {
-  apikey: window.SUPABASE_ANON_KEY,
-  Authorization: 'Bearer ' + window.SUPABASE_ANON_KEY,
-  'Content-Type': 'application/json',
-  Prefer: 'return=representation',
+if (!window.supabase) {
+  throw new Error('Supabase non caricato: verifica connessione internet e URL CDN')
 }
+const { createClient } = window.supabase
+const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY)
+
+const TABLE = 'notes'
 
 const db = {
   async getAll() {
-    const res = await fetch(BASE + '/notes?order=createdAt.asc', {
-      headers: HEADERS,
-    })
-    if (!res.ok) throw new Error(res.statusText)
-    return res.json()
+    const { data, error } = await supabase
+      .from(TABLE)
+      .select('*')
+      .order('createdAt', { ascending: true })
+    if (error) throw error
+    return data
   },
 
   async create(data) {
-    const res = await fetch(BASE + '/notes', {
-      method: 'POST',
-      headers: HEADERS,
-      body: JSON.stringify(data),
-    })
-    if (!res.ok) throw new Error(res.statusText)
-    const [note] = await res.json()
+    const { data: note, error } = await supabase
+      .from(TABLE)
+      .insert(data)
+      .select()
+      .single()
+    if (error) throw error
     return note
   },
 
   async update(id, data) {
-    const res = await fetch(BASE + '/notes?id=eq.' + id, {
-      method: 'PATCH',
-      headers: HEADERS,
-      body: JSON.stringify(data),
-    })
-    if (!res.ok) throw new Error(res.statusText)
-    const [note] = await res.json()
+    const { data: note, error } = await supabase
+      .from(TABLE)
+      .update(data)
+      .eq('id', id)
+      .select()
+      .single()
+    if (error) throw error
     return note
   },
 
   async remove(id) {
-    const res = await fetch(BASE + '/notes?id=eq.' + id, {
-      method: 'DELETE',
-      headers: HEADERS,
-    })
-    if (!res.ok) throw new Error(res.statusText)
+    const { error } = await supabase
+      .from(TABLE)
+      .delete()
+      .eq('id', id)
+    if (error) throw error
   },
 }
+
 window.db = db;
