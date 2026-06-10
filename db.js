@@ -6,7 +6,7 @@ const HEADERS = {
   Prefer: 'return=representation',
 }
 
-
+const db = {
   async getAll() {
     const res = await fetch(BASE + '/notes?order=createdAt.asc', {
       headers: HEADERS,
